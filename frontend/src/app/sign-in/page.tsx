@@ -66,7 +66,7 @@ const LoginPage = () => {
         <p>Home</p>
       </Link>
 
-      <div className={`md:max-w-sm w-[95%] p-8 rounded-lg border`}>
+      <div className={`md:max-w-sm w-[90%] p-8 rounded-lg border`}>
         <h2 className="text-3xl text-center font-semibold">
           Sign in to Wait-list
         </h2>

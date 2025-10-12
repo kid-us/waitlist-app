@@ -14,7 +14,7 @@ const Navbar = () => {
   if (!mounted) return null;
 
   return (
-    <nav className="flex items-center justify-between w-sm mx-auto border rounded-full ps-5 py-1 pe-1 bg-accent/30 h-11">
+    <nav className="flex items-center justify-between md:w-sm w-xs mx-auto border rounded-full ps-5 py-1 pe-1 bg-accent/30 h-11">
       <Image
         src={theme === "dark" ? "/logo-1.png" : "/logo-2.png"}
         width={40}

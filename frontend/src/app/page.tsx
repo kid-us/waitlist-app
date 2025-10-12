@@ -23,7 +23,7 @@ export default function Home() {
   };
 
   return (
-    <main>
+    <main className="md:px-0 px-5">
       {/* Success Modal  */}
       {success && <Modal animate={animate} onClose={handleClose} />}
 
@@ -31,20 +31,20 @@ export default function Home() {
       <div className="font-sans max-w-5xl h-screen mx-auto flex flex-col items-center py-16 justify-between relative overflow-hidden">
         <Navbar />
         <HeroBg />
-        <div className="max-w-lg text-center items-center backdrop-blur-sm">
-          <div className="flex items-center justify-center font-medium text-sm mb-5">
+        <div className="max-w-lg text-center items-center md:backdrop-blur-sm backdrop-blur-xs">
+          <div className="flex items-center justify-center font-medium md:text-sm text-xs mb-5 md:mt-0 mt-10">
             <div className="shadow-xs rounded-full py-2 flex space-x-2 items-center px-5 border">
               <Crown size={14} />
               <p>Beyond a Wait-list</p>
             </div>
           </div>
-          <h1 className="font-bold text-5xl mb-8">
+          <h1 className="font-bold md:text-5xl text-3xl mb-8">
             Early access to the wait-list
           </h1>
-          <p className="dark:text-zinc-400 text-zinc-500 text-lg">
+          <p className="dark:text-zinc-400 text-zinc-500 md:text-lg text-sm">
             Unlock exclusive early access to the groundbreaking Wait-list.
           </p>
-          <p className="dark:text-zinc-400 text-zinc-500 text-lg">
+          <p className="dark:text-zinc-400 text-zinc-500 md:text-lg text-sm">
             Subscribe now and stay ahead of the future!
           </p>
 
