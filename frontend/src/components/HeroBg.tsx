@@ -1,14 +1,17 @@
 "use client";
 
+import { useTheme } from "next-themes";
 import { useEffect } from "react";
 
 const HeroBg = () => {
+  const { theme } = useTheme();
+
   useEffect(() => {
     const lines = document.querySelectorAll(
       ".background-svg line"
     ) as NodeListOf<SVGLineElement>;
     const defaultColor = "#CDCDCD";
-    const highlightColor = "#e0b84d";
+    const highlightColor = "#71717a";
     const defaultOpacity = 0.1;
     const highlightOpacity = 1;
     const transitionDuration = 1000;
