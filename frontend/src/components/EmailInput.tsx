@@ -27,7 +27,7 @@ const EmailInput = ({ onSuccess }: { onSuccess: () => void }) => {
       {/* Input and Button */}
       <Input
         type="email"
-        className="rounded-full h-16 ps-6 placeholder:text-lg !text-lg"
+        className="rounded-full h-16 ps-6 placeholder:text-lg !text-lg border border-zinc-300"
         placeholder="Email"
         value={emailAddress}
         disabled={loading}
