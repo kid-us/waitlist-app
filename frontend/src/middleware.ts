@@ -5,20 +5,18 @@ const protectedRoutes = ["/admin"];
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-
   const response = NextResponse.next();
 
-  // Only protect certain routes
   if (protectedRoutes.some((route) => pathname.startsWith(route))) {
-    // Read token from cookie
-    const token = localStorage.getItem("token");
+    // Read token from cookie instead of localStorage
+    const token = request.cookies.get("token")?.value;
 
     if (!token) {
       return NextResponse.redirect(new URL("/sign-in", request.url));
     }
 
     try {
-      const res = await fetch(`/me`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/me`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -36,3 +34,7 @@ export async function middleware(request: NextRequest) {
 
   return response;
 }
+
+export const config = {
+  matcher: ["/admin"],
+};

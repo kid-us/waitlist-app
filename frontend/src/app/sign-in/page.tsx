@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Eye, EyeOff, House, Loader } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/dist/client/components/navigation";
 
 const loginSchema = z.object({
   email: z.email(),
@@ -25,6 +26,7 @@ const loginSchema = z.object({
 type LoginValues = z.infer<typeof loginSchema>;
 
 const LoginPage = () => {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
 
   const form = useForm<LoginValues>({
@@ -46,6 +48,7 @@ const LoginPage = () => {
     });
 
     if (res.ok) {
+      router.push("/admin");
     } else {
     }
   };

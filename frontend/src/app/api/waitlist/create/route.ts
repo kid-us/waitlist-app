@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
 
     // Replace this with your real API endpoint
     const response = await fetch(
-      "https://api/v1/livejamgames.com/admin/join-waitlist",
+      "https://api/v1/livejamgames.com/admin/create-waitlist",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },

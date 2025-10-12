@@ -73,8 +73,12 @@ const AdminPage = () => {
       <Table className="border border-border">
         <TableHeader className="bg-foreground">
           <TableRow>
-            <TableHead className="w-[100px] ">Email Address</TableHead>
-            <TableHead className="text-right ">Sign Up Date</TableHead>
+            <TableHead className="w-[100px] text-white dark:text-black">
+              Email Address
+            </TableHead>
+            <TableHead className="text-right text-white dark:text-black">
+              Sign Up Date
+            </TableHead>
           </TableRow>
         </TableHeader>
 
