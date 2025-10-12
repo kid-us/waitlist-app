@@ -11,15 +11,46 @@ const EmailInput = ({ onSuccess }: { onSuccess: () => void }) => {
   const [loading, setLoading] = useState(false);
 
   // Handle Join WaitList
-  const handleJoinWaitList = () => {
+  const handleJoinWaitList = async () => {
+    if (!emailAddress) {
+      toast.error("Please enter a valid email", {
+        className: "!bg-red-500 !text-white",
+        duration: 8000,
+        position: "bottom-center",
+      });
+
+      return;
+    }
+
     setLoading(true);
-    onSuccess();
-    // Error Toast
-    toast.error("Hello", {
-      className: "!bg-red-500 !text-white",
-      duration: 8000,
-      position: "bottom-center",
-    });
+
+    try {
+      const res = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: emailAddress }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) throw new Error(data.message || "Failed to join waitlist");
+
+      toast.success(data.message, {
+        className: "!bg-green-500 !text-white",
+        duration: 8000,
+        position: "bottom-center",
+      });
+      onSuccess();
+      setEmailAddress("");
+    } catch (error: any) {
+      toast.success(error.message, {
+        className: "!bg-green-500 !text-white",
+        duration: 8000,
+        position: "bottom-center",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
