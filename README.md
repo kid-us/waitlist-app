@@ -7,6 +7,10 @@ https://github.com/kid-us/waitlist-app
 - Frontend: https://waitlist-app-six.vercel.app/
 - Backend API Docs: https://waitlist.jamescog.com/docs
 
+## Usage
+- **Apply for Waitlist**: Visit https://waitlist-app-six.vercel.app/ to submit your email and join the waitlist
+- **Admin Dashboard**: Access admin features at `/admin`
+
 ## Admin Dashboard Password
 - Username: admin@example.com
 - Password: password123
