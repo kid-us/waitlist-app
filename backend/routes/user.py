@@ -19,6 +19,7 @@ async def join_waitlist(
     repo = UserRepository(session)
     try:
         waitlist_entry = await repo.create_waitlist_entry(request.email)
+        waitlist_entry.message = "Successfully added to waitlist"
         background_tasks.add_task(send_welcome_email, request.email)
         return WaitlistResponse.model_validate(waitlist_entry)
     except ValueError as e:

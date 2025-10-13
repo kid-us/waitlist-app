@@ -12,6 +12,7 @@ class WaitlistResponse(BaseModel):
     email: str
     created_at: datetime
     status: str
+    message: str
 
     model_config = {"from_attributes": True}
 
@@ -32,5 +33,6 @@ class PaginationMeta(BaseModel):
 
 
 class PaginatedWaitlistResponse(BaseModel):
+    message: str
     data: list[WaitlistResponse]
     pagination: PaginationMeta

@@ -33,7 +33,7 @@ async def login_admin(request: AdminLoginRequest, session: AsyncSession = Depend
     token_data = {"sub": admin.email, "role": "admin"}
     access_token = create_access_token(token_data)
 
-    return {"access_token": access_token, "token_type": "bearer"}
+    return {"access_token": access_token, "token_type": "bearer", "message": "Login successful"}
 
 
 @router.get("/waitlist", response_model=PaginatedWaitlistResponse, dependencies=[Depends(RequiresAdmin)])
@@ -49,6 +49,7 @@ async def get_waitlist(
     data = [WaitlistResponse.model_validate(entry) for entry in waitlist_entries]
 
     return PaginatedWaitlistResponse(
+        message="Waitlist fetched successfully",
         data=data,
         pagination=pagination
     )
