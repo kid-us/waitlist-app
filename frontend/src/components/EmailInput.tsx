@@ -5,6 +5,7 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { useState } from "react";
 import { Loader } from "lucide-react";
+import axios from "axios";
 
 const EmailInput = ({ onSuccess }: { onSuccess: () => void }) => {
   const [emailAddress, setEmailAddress] = useState<string>("");
@@ -18,33 +19,27 @@ const EmailInput = ({ onSuccess }: { onSuccess: () => void }) => {
         duration: 8000,
         position: "bottom-center",
       });
-
       return;
     }
 
     setLoading(true);
 
     try {
-      const res = await fetch("/api/waitlist", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: emailAddress }),
-      });
+      const response = await axios.post(
+        "/api/waitlist/create",
+        { email: emailAddress },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-      const data = await res.json();
-
-      if (!res.ok) throw new Error(data.message || "Failed to join waitlist");
-
-      toast.success(data.message, {
-        className: "!bg-green-500 !text-white",
-        duration: 8000,
-        position: "bottom-center",
-      });
       onSuccess();
       setEmailAddress("");
     } catch (error: any) {
-      toast.success(error.message, {
-        className: "!bg-green-500 !text-white",
+      toast.success(error.response.data.details.message, {
+        className: "!bg-yellow-500 !text-white",
         duration: 8000,
         position: "bottom-center",
       });

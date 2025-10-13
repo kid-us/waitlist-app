@@ -1,43 +1,32 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import axios from "axios";
 
-export async function POST(req: NextRequest) {
+export async function POST(req: Request) {
   try {
     const { email } = await req.json();
 
-    if (!email || !/\S+@\S+\.\S+/.test(email)) {
-      return NextResponse.json(
-        { success: false, message: "Invalid email" },
-        { status: 400 }
-      );
+    if (!email) {
+      return NextResponse.json({ error: "Email is required" }, { status: 400 });
     }
 
-    // Replace this with your real API endpoint
-    const response = await fetch(
-      "https://api/v1/livejamgames.com/admin/create-waitlist",
+    const response = await axios.post(
+      "https://waitlist.jamescog.com/api/v1/user/waitlist",
+      { email },
       {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        headers: {
+          "Content-Type": "application/json",
+          accept: "application/json",
+        },
       }
     );
 
-    const data = await response.json();
-
-    if (!response.ok) {
-      return NextResponse.json(
-        { success: false, message: data.message || "Failed to join" },
-        { status: response.status }
-      );
-    }
-
-    return NextResponse.json({
-      success: true,
-      message: data.message || "Joined waitlist successfully",
-    });
-  } catch (error: any) {
+    return NextResponse.json(response.data);
+  } catch (err: any) {
     return NextResponse.json(
-      { success: false, message: error.message || "Something went wrong" },
-      { status: 500 }
+      {
+        details: err.response?.data || err.message,
+      },
+      { status: err.response?.status || 500 }
     );
   }
 }
