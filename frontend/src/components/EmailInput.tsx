@@ -25,7 +25,7 @@ const EmailInput = ({ onSuccess }: { onSuccess: () => void }) => {
     setLoading(true);
 
     try {
-      const response = await axios.post(
+      await axios.post(
         "/api/waitlist/create",
         { email: emailAddress },
         {

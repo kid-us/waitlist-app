@@ -17,6 +17,8 @@ import { Button } from "@/components/ui/button";
 import { Eye, EyeOff, House, Loader } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/dist/client/components/navigation";
+import { toast } from "sonner";
+import axios from "axios";
 
 const loginSchema = z.object({
   email: z.email(),
@@ -40,16 +42,34 @@ const LoginPage = () => {
   const { isSubmitting } = form.formState;
 
   // On Submit
-  const onSubmit = async (values: LoginValues) => {
-    const res = await fetch("/api/admin-login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(values),
-    });
 
-    if (res.ok) {
+  const onSubmit = async (values: LoginValues) => {
+    try {
+      const loginData = {
+        email: values.email,
+        password: values.password,
+      };
+
+      const res = await axios.post("/api/auth", loginData);
+
+      // Success
+      toast.success(res.data?.details?.message || "Login successful!", {
+        className: "!bg-green-500 !text-white",
+        duration: 8000,
+        position: "bottom-center",
+      });
+
       router.push("/admin");
-    } else {
+    } catch (error: any) {
+      // Error
+      toast.error(
+        error.response?.data?.details?.message || "Invalid email or password",
+        {
+          className: "!bg-red-500 !text-white",
+          duration: 8000,
+          position: "bottom-center",
+        }
+      );
     }
   };
 

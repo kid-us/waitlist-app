@@ -19,16 +19,18 @@ import {
 } from "@/components/ui/pagination";
 import Link from "next/link";
 import { WaitList } from "@/types/types";
+import axios from "axios";
+import { Loader } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const AdminPage = () => {
   const [page, setPage] = useState<number>(1);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [waitLists, setWaitLists] = useState<WaitList>();
 
   const formatDate = (dateString: string): string => {
     const date = new Date(dateString);
 
-    // Example: "Sep 25, 2025, 10:30 AM"
     return date.toLocaleString("en-US", {
       year: "numeric",
       month: "short",
@@ -42,19 +44,12 @@ const AdminPage = () => {
   // Get wait list
   useEffect(() => {
     const fetchWaitlist = async () => {
-      setLoading(true);
       try {
-        const res = await fetch("/api/get-waitlist");
-        const data = await res.json();
-
-        if (!res.ok)
-          throw new Error(data.message || "Failed to fetch waitlist");
-
-        setWaitLists(data.waitlist);
-      } catch (error: any) {
-        console.error(error);
-      } finally {
+        const res = await axios.get("/api/waitlist/get");
+        setWaitLists(res.data);
         setLoading(false);
+      } catch (err) {
+        console.error(err);
       }
     };
 
@@ -76,26 +71,47 @@ const AdminPage = () => {
             <TableHead className="w-[100px] text-white dark:text-black">
               Email Address
             </TableHead>
+            <TableHead className="w-[100px] text-white dark:text-black">
+              Status
+            </TableHead>
             <TableHead className="text-right text-white dark:text-black">
               Sign Up Date
             </TableHead>
           </TableRow>
         </TableHeader>
 
-        <TableBody>
-          {waitLists &&
-            waitLists.data.map((data) => (
-              <TableRow key={data.email_address}>
-                <TableCell className="border overflow-hidden ">
-                  <p className="w-60 text-wrap">{data.email_address}</p>
+        {waitLists && waitLists.data.length > 0 && (
+          <TableBody>
+            {waitLists.data.map((data) => (
+              <TableRow key={data.id}>
+                <TableCell className="border overflow-hidden">
+                  <p className="w-60 text-wrap">{data.email}</p>
+                </TableCell>
+                <TableCell className="border overflow-hidden">
+                  <p className="w-60 text-wrap capitalize">{data.status}</p>
                 </TableCell>
                 <TableCell className="text-right">
                   {formatDate(data.created_at)}
                 </TableCell>
               </TableRow>
             ))}
-        </TableBody>
+          </TableBody>
+        )}
       </Table>
+
+      {/* Empty Data Msg */}
+      {waitLists && waitLists.data.length < 1 && (
+        <p className="text-center text-sm py-4 bg-secondary">
+          Opps, No one is interested
+        </p>
+      )}
+
+      {/* Empty Data Msg */}
+      {loading && (
+        <div className="flex items-center justify-center mt-5">
+          <Loader className="animate-spin" />
+        </div>
+      )}
 
       {/* Pagination */}
       <Pagination className="mt-5 flex justify-end">
@@ -104,15 +120,15 @@ const AdminPage = () => {
             <PaginationPrevious
               href="#"
               onClick={(e) => {
-                if (!waitLists?.has_prev) e.preventDefault();
+                if (!waitLists?.pagination.has_prev) e.preventDefault();
                 else setPage(page - 1);
               }}
               className={
-                !waitLists?.has_prev
+                !waitLists?.pagination.has_prev
                   ? "pointer-events-none opacity-50 border"
                   : "border"
               }
-              aria-disabled={!waitLists?.has_prev}
+              aria-disabled={!waitLists?.pagination.has_prev}
             />
           </PaginationItem>
 
@@ -124,15 +140,15 @@ const AdminPage = () => {
             <PaginationNext
               href="#"
               onClick={(e) => {
-                if (!waitLists?.has_next) e.preventDefault();
+                if (!waitLists?.pagination.has_next) e.preventDefault();
                 else setPage(page + 1);
               }}
               className={
-                !waitLists?.has_next
+                !waitLists?.pagination.has_next
                   ? "pointer-events-none opacity-50 border"
                   : "border"
               }
-              aria-disabled={!waitLists?.has_next}
+              aria-disabled={!waitLists?.pagination.has_next}
             />
           </PaginationItem>
         </PaginationContent>

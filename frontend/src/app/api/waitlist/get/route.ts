@@ -1,34 +1,34 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import axios from "axios";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
-    // Replace this URL with your real API endpoint
-    const response = await fetch(
-      "https://api/v1/livejamgames.com/admin/get-waitlist",
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          // Add authorization if needed
-          // "Authorization": `Bearer ${process.env.ADMIN_API_TOKEN}`,
-        },
-      }
-    );
+    const token = req.cookies.get("access_token")?.value;
 
-    const data = await response.json();
-
-    if (!response.ok) {
+    if (!token) {
       return NextResponse.json(
-        { success: false, message: data.message || "Failed to fetch waitlist" },
-        { status: response.status }
+        { success: false, message: "Unauthorized" },
+        { status: 401 }
       );
     }
 
-    return NextResponse.json({ success: true, waitlist: data });
+    const url = "https://waitlist.jamescog.com/api/v1/admin/waitlist";
+    const response = await axios.get(url, {
+      params: { page: 1, per_page: 10 },
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+      },
+    });
+
+    return NextResponse.json(response.data);
   } catch (error: any) {
     return NextResponse.json(
-      { success: false, message: error.message || "Something went wrong" },
-      { status: 500 }
+      {
+        success: false,
+        message: error.response?.data?.message || error.message,
+      },
+      { status: error.response?.status || 500 }
     );
   }
 }
