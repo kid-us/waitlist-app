@@ -8,10 +8,10 @@ from pathlib import Path
 project_root = Path(__file__).parent
 sys.path.insert(0, str(project_root))
 
-from backend.core.db_conn import sessionmanager, Base
-from backend.repositories.admin import AdminRepository
-from backend.utils.admin_utils import create_admin_util
-from backend.schemas.admin import AdminCreateRequest
+from core.db_conn import sessionmanager, Base
+from repositories.admin import AdminRepository
+from utils.admin_utils import create_admin_util
+from schemas.admin import AdminCreateRequest
 
 
 async def create_tables():

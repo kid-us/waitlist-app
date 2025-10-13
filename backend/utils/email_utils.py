@@ -1,6 +1,6 @@
 import html
 import resend
-from backend.core.config import get_settings
+from core.config import get_settings
 
 settings = get_settings()
 resend.api_key = settings.resend_api_key

@@ -7,7 +7,7 @@ from sqlalchemy import String, Enum as SAEnum, DateTime
 from sqlalchemy.orm import Mapped, mapped_column
 
 
-from backend.core.db_conn import Base
+from core.db_conn import Base
 
 
 class Status(Enum):

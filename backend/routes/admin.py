@@ -2,13 +2,13 @@ from fastapi import APIRouter, Depends, Query, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from typing import Annotated
 
-from backend.core.db_conn import get_db_session
-from backend.schemas.waitlist import PaginatedWaitlistResponse, WaitlistResponse, ErrorResponse
-from backend.schemas.admin import AdminLoginRequest
-from backend.repositories.admin import AdminRepository
-from backend.utils.password_utils import verify_password
-from backend.utils.auth_utils import create_access_token
-from backend.deps.auth import RequiresAdmin
+from core.db_conn import get_db_session
+from schemas.waitlist import PaginatedWaitlistResponse, WaitlistResponse, ErrorResponse
+from schemas.admin import AdminLoginRequest
+from repositories.admin import AdminRepository
+from utils.password_utils import verify_password
+from utils.auth_utils import create_access_token
+from deps.auth import RequiresAdmin
 
 router = APIRouter(tags=["admin"], prefix="/api/v1/admin")
 

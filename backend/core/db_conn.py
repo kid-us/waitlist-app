@@ -1,6 +1,6 @@
 """Initialize the database connection and provide async context helpers."""
 
-from backend.core.config import get_settings
+from core.config import get_settings
 from typing import Any, AsyncIterator
 import contextlib
 
@@ -47,7 +47,13 @@ class DatabaseSessionManager:
     async def close(self):
         if self._engine is None:
             raise Exception("DatabaseSessionManager is not initialized")
-        await self._engine.dispose()
+        try:
+            await self._engine.dispose()
+        except RuntimeError as e:
+            if "Event loop is closed" in str(e):
+                print("Database engine disposal skipped due to closed event loop.")
+            else:
+                raise
 
         self._engine = None
         self._sessionmaker = None

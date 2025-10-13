@@ -3,10 +3,10 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.exc import IntegrityError
 from math import ceil
 
-from backend.models.waitlist import Waitlist
-from backend.models.admin import Admin
-from backend.schemas.waitlist import PaginationMeta
-from backend.utils.password_utils import hash_password
+from models.waitlist import Waitlist
+from models.admin import Admin
+from schemas.waitlist import PaginationMeta
+from utils.password_utils import hash_password
 
 
 class AdminRepository:

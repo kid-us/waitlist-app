@@ -2,7 +2,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.exc import IntegrityError
 
-from backend.models.waitlist import Waitlist
+from models.waitlist import Waitlist
 
 
 class UserRepository:

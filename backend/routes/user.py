@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from backend.core.db_conn import get_db_session
-from backend.schemas.waitlist import WaitlistCreateRequest, WaitlistResponse, ErrorResponse
-from backend.repositories.user import UserRepository
-from backend.utils.email_utils import send_welcome_email
+from core.db_conn import get_db_session
+from schemas.waitlist import WaitlistCreateRequest, WaitlistResponse, ErrorResponse
+from repositories.user import UserRepository
+from utils.email_utils import send_welcome_email
 
 router = APIRouter()
 

@@ -2,10 +2,10 @@ from fastapi import FastAPI, Request, HTTPException
 from fastapi.exceptions import RequestValidationError
 from contextlib import asynccontextmanager
 
-from backend.core.db_conn import sessionmanager
-from backend.core.db_conn import Base
-from backend.routes import user, admin
-from backend.schemas.waitlist import ErrorResponse
+from core.db_conn import sessionmanager
+from core.db_conn import Base
+from routes import user, admin
+from schemas.waitlist import ErrorResponse
 
 
 @asynccontextmanager

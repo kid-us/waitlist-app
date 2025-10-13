@@ -1,7 +1,7 @@
 """Admin creation utilities."""
 
-from backend.repositories.admin import AdminRepository
-from backend.schemas.admin import AdminCreateRequest, AdminResponse
+from repositories.admin import AdminRepository
+from schemas.admin import AdminCreateRequest, AdminResponse
 
 
 async def create_admin_util(repo: AdminRepository, request: AdminCreateRequest) -> AdminResponse:
