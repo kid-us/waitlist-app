@@ -28,5 +28,5 @@ async def join_waitlist(
                 status=400,
                 error_code="DUPLICATE_EMAIL",
                 message=str(e)
-            ).dict()
+            ).model_dump()
         )
