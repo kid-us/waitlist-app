@@ -29,7 +29,6 @@ async def login_admin(request: AdminLoginRequest, session: AsyncSession = Depend
             ).model_dump()
         )
 
-    # Create JWT token with admin role
     token_data = {"sub": admin.email, "role": "admin"}
     access_token = create_access_token(token_data)
 
