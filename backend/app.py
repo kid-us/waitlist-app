@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.exceptions import RequestValidationError
+from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 
 from core.db_conn import sessionmanager
@@ -25,6 +26,14 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 app.include_router(user.router, prefix="/api/v1/user", tags=["user"])
 app.include_router(admin.router, prefix="/api/v1/admin", tags=["admin"])
 
@@ -43,7 +52,7 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
 async def http_exception_handler(request: Request, exc: HTTPException):
     """Handle HTTP exceptions with consistent format."""
     if isinstance(exc.detail, dict) and "status" in exc.detail and "error_code" in exc.detail:
-        return exc.detail
+        return ErrorResponse(**exc.detail).model_dump()
     
     return ErrorResponse(
         status=exc.status_code,
