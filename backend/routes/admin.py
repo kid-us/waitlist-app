@@ -10,7 +10,7 @@ from utils.password_utils import verify_password
 from utils.auth_utils import create_access_token
 from deps.auth import RequiresAdmin
 
-router = APIRouter(tags=["admin"], prefix="/api/v1/admin")
+router = APIRouter()
 
 
 @router.post("/login")
