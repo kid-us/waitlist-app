@@ -35,16 +35,18 @@ export default function Home() {
           <div className="flex items-center justify-center font-medium md:text-sm text-xs mb-5 md:mt-0 mt-10">
             <div className="shadow-xs rounded-full py-2 flex space-x-2 items-center px-5 border">
               <Crown size={14} />
-              <p>Beyond a Wait-list</p>
+              <p>Beyond a waitlist</p>
             </div>
           </div>
           <h1 className="font-bold md:text-5xl text-3xl mb-8">
-            Early access to the wait-list
+            The wait is part of the{" "}
+            <span className="text-amber-500/60">journey.</span>
           </h1>
-          <p className="dark:text-zinc-400 text-zinc-500 md:text-lg text-sm">
-            Unlock exclusive early access to the groundbreaking Wait-list.
+          <p className="dark:text-zinc-400 text-zinc-600 md:text-lg text-sm">
+            Get early access to our upcoming release and secure your spot on the
+            waitlist.
           </p>
-          <p className="dark:text-zinc-400 text-zinc-500 md:text-lg text-sm">
+          <p className="dark:text-zinc-500 text-zinc-400 md:text-sm text-xs">
             Subscribe now and stay ahead of the future!
           </p>
 
